@@ -1,4 +1,6 @@
-﻿using System;
+﻿using BitTorrent.Enteties;
+using MonoTorrent.Common;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -13,9 +15,13 @@ namespace BitTorrent
 {
     public partial class Form1 : Form
     {
+        Torrent _torrent;
+        static string _torrentPath;
+        
         public Form1()
         {
             InitializeComponent();
+           
             AddLVItem("A", "Ziggy",40.7,40.7,66.7);
         }
 
@@ -29,16 +35,31 @@ namespace BitTorrent
             
           
             AddGroupBox();
-            //using (OpenFileDialog openFile = new OpenFileDialog())
-            //{
-            //    openFile.FilterIndex = 1;
-            //    openFile.Filter = "Torrent files(*.torrent) | *.torrent | All files(*.*) | *.*";
-            //    if(openFile.ShowDialog() == DialogResult.OK)
-            //    {
-                   
-            //    }
-                
-            //}
+            using (OpenFileDialog openFile = new OpenFileDialog())
+            {
+                openFile.FilterIndex = 1;
+                openFile.Filter = "Torrent files(*.torrent)|*.torrent| All files(*.*) | *.*";
+                if (openFile.ShowDialog() == DialogResult.OK)
+                {
+                    string sFileName = openFile.FileName;
+                    _torrentPath = sFileName;
+                    try
+                    {
+                        _torrent = Torrent.Load(_torrentPath);
+                        
+                    }
+                    catch
+                    {
+                        
+                    }
+                    TorrentInformation tf = new TorrentInformation(_torrent.Name, _torrent.Comment, _torrent.CreationDate, _torrent.Size);
+
+                    SaveForm save = new SaveForm(tf);
+                    save.Show();
+
+                }
+
+            }
         }
 
         private void AddGroupBox()
