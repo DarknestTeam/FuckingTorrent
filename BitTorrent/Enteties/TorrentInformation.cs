@@ -26,5 +26,11 @@ namespace BitTorrent.Enteties
             _creationDate = creationDate;
             ///_downloadPath = downloadPath;
         }
+        public double TorrentSize(double torrentsize)
+        {
+            double result = torrentsize /  Math.Pow(1024, 3);
+
+            return Math.Round(result,2);
+        }
     }
 }
