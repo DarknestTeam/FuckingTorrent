@@ -17,14 +17,14 @@ namespace BitTorrent.Enteties
         public double _partCout { get; set; }
         public double _torrentSize { get; set; }
         public string _description { get; set; }
-        static string _downloadPath { get; set; }
-        public TorrentInformation(string name,string description,DateTime creationDate,double torrentSize)
+        public  string _downloadPath { get; set; }
+        public TorrentInformation(string name,string description,DateTime creationDate,double torrentSize, string downloadPath)
         {
             _name = name;
             _description = description;
             _torrentSize = torrentSize;
             _creationDate = creationDate;
-            ///_downloadPath = downloadPath;
+           _downloadPath = downloadPath;
         }
         public double TorrentSize(double torrentsize)
         {

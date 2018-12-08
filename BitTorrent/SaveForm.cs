@@ -22,6 +22,7 @@ namespace BitTorrent
             label7.Text = information._description;
             label8.Text = TorrentSize(information._torrentSize).ToString("#.##") + " GB";
             label9.Text = information._creationDate.ToString();
+            label10.Text = information._downloadPath.ToString();
 
         }
         public double TorrentSize(double torrentsize) {
@@ -30,16 +31,7 @@ namespace BitTorrent
             return result;
 
         }
-        private void pictureBox1_Click(object sender, EventArgs e)
-        {
-           FolderBrowserDialog dialog = new FolderBrowserDialog();
-            if(dialog.ShowDialog() == DialogResult.OK)
-            {
-                textBox1.Text = dialog.SelectedPath;
-                
-
-            }
-        }
+        
 
         private void button2_Click(object sender, EventArgs e)
         {
