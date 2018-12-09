@@ -1,4 +1,5 @@
 ﻿using BitTorrent.Enteties;
+using MonoTorrent;
 using MonoTorrent.BEncoding;
 using MonoTorrent.Client;
 using MonoTorrent.Client.Encryption;
@@ -26,6 +27,7 @@ namespace BitTorrent
         static ClientEngine _engine;
         static Top10Listener _listener;
         static TorrentManager _manager;
+        public   string hash = "";
         //Имя и путь к файлу, который будет содержать служебную информацию, необходимую для возобновления закачки
 
 
@@ -49,6 +51,7 @@ namespace BitTorrent
                 {
                     string sFileName = openFile.FileName;
                     _torrentPath = sFileName;
+                  
                     GetPath();
                     
                     
@@ -73,6 +76,7 @@ namespace BitTorrent
             if (dialog.ShowDialog() == DialogResult.OK)
             {
                _dowlPath = dialog.SelectedPath;
+
 
             }
            
@@ -109,6 +113,9 @@ namespace BitTorrent
             try
             {
                 _torrent = Torrent.Load(_torrentPath); // если все ОК
+              
+               
+                 
                 
             }
             catch
@@ -139,6 +146,8 @@ namespace BitTorrent
             //    _manager = new TorrentManager(_torrent, _downloadPath, _torrentDef, new FastResume((BEncodedDictionary)_fastResume[_torrent.InfoHash])); // для уже запущенной закачки
             //else
             _manager = new TorrentManager(_torrent, _dowlPath, _torrentDef); //для новой закачки
+
+            //_manager = new TorrentManager(InfoHash.FromHex(hash), downloadsPath, torrentDefaults, downloadsPathForTorrent);
 
             _engine.Register(_manager);
 
@@ -290,6 +299,42 @@ namespace BitTorrent
             Invoke(new AddMessageDelegate(AddGroupBox), new object[] { Name, Size.ToString(), Remaning.ToString(), Download_speed.ToString(), Output.ToString(), Loaded.ToString() });
            
             timer1.Enabled = false;
+        }
+
+        public void StopTorrent(TorrentManager manager)
+         {
+             // When stopping a torrent, certain cleanup tasks need to be perfomed
+            // such as flushing unwritten data to disk and informing the tracker
+             // the client is no longer downloading/seeding the torrent. To allow for
+           // this, when Stop is called the manager enters a 'Stopping' state. Once
+           // all the tasks are completed the manager will enter the 'Stopped' state.
+ 
+            // Hook into the TorrentStateChanged event so we can tell when the torrent
+            // finishes cleanup
+            manager.TorrentStateChanged += delegate (object o, TorrentStateChangedEventArgs e) {                 if (e.NewState == TorrentState.Stopping)
+               {
+                    MessageBox.Show("Torrent {0} has begun stopping", e.TorrentManager.Torrent.Name);
+                 ///  ("Torrent {0} has begun stopping", e.TorrentManager.Torrent.Name);
+               }
+               else if (e.NewState == TorrentState.Stopped)                {
+                    // It is now safe to unregister the torrent from the engine and dispose of it (if required)                    engine.Unregister(manager);
+                     manager.Dispose();
+
+                    MessageBox.Show("Torrent {0} has stopped", e.TorrentManager.Torrent.Name);
+                }
+            };
+
+            // Begin the process to stop the torrent
+            manager.Stop();
+        }
+        private void pictureBox5_Click(object sender, EventArgs e)
+        {
+           
+        }
+
+        private void pictureBox6_Click(object sender, EventArgs e)
+        {
+            StopTorrent(_manager);
         }
     }
 }
