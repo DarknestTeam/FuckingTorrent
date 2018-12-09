@@ -10,6 +10,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Net;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 
@@ -18,7 +19,7 @@ namespace BitTorrent
     public partial class Form1 : Form
     {
        static TorrentInformation tf;
-       static Torrent _torrent;
+        public static Torrent _torrent;
         static string _dowlPath;
         static string _fastResumeFile;
         static string _torrentPath;
@@ -52,12 +53,16 @@ namespace BitTorrent
                     
                     
 
-                    _fastResumeFile = _dowlPath + "\temp.data";
+                    
 
                     _listener = new Top10Listener(10);
 
                     //слот отдачи, количество одновременных подключений, макс скорость загрузки, макс скорость отдачи
-                    DoDownload();
+                    Task.Factory.StartNew(() => DoDownload());
+
+                    AddGroupBox(_torrent.Name, _torrent.Size, 23, _manager.Monitor.DownloadSpeed, 1, 1);//Error
+
+
                 }
             }
         }
@@ -87,7 +92,7 @@ namespace BitTorrent
             _engine = new ClientEngine(_engineSettings);
 
             BEncodedDictionary _fastResume;
-
+            _fastResumeFile = _dowlPath + "\temp.data";
 
 
             // Читаю или создаю индексный файл. Если файл есть - читаю, если нет - создаю
@@ -156,7 +161,7 @@ namespace BitTorrent
 
 
             _manager.Start();
-
+            
             int i = 0;
             bool _running = true;
 
@@ -173,8 +178,7 @@ namespace BitTorrent
                     }
 
                     _stringBuilder.Remove(0, _stringBuilder.Length);
-                    AddGroupBox(_torrent.Name, _torrent.Size, _manager.Progress, _manager.Monitor.DownloadSpeed, _manager.Monitor.UploadSpeed, _manager.Progress);
-
+                    
                     //formatOutput(_stringBuilder, "Total Download Rate: {0:0.00}kB/sec", _engine.TotalDownloadSpeed / 1024.0);
                     //formatOutput(_stringBuilder, "Total Upload Rate:   {0:0.00}kB/sec", _engine.TotalUploadSpeed / 1024.0);
                     //formatOutput(_stringBuilder, "Disk Read Rate:      {0:0.00} kB/s", _engine.DiskManager.ReadRate / 1024.0);
@@ -196,10 +200,10 @@ namespace BitTorrent
 
                     //Console.Clear();
                     //Console.WriteLine(_stringBuilder.ToString());
-                    _listener.ExportTo(Console.Out);
+
                 }
 
-                System.Threading.Thread.Sleep(500);
+               
             }
         }
         public void AddGroupBox( string Name, double   Size, double Remaning,  double Download_speed,  double Output,  double Loaded)
