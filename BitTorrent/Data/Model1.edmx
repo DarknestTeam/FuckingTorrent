@@ -1,0 +1,119 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище TorrentDBModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <!--Ошибки, обнаруженные при создании:
+предупреждение 6002: В таблице или представлении "TorrentDB.dbo.psy_trance_fm_bittorrent_announces" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
+        <EntityType Name="psy_trance_fm_bittorrent_announces">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="info_hash" />
+            <PropertyRef Name="peer_id" />
+            <PropertyRef Name="ip" />
+            <PropertyRef Name="port" />
+            <PropertyRef Name="uploaded" />
+            <PropertyRef Name="downloaded" />
+            <PropertyRef Name="left" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="info_hash" Type="char" MaxLength="40" Nullable="false" />
+          <Property Name="peer_id" Type="char" MaxLength="40" Nullable="false" />
+          <Property Name="ip" Type="varchar" MaxLength="512" Nullable="false" />
+          <Property Name="port" Type="int" Nullable="false" />
+          <Property Name="uploaded" Type="int" Nullable="false" />
+          <Property Name="downloaded" Type="int" Nullable="false" />
+          <Property Name="left" Type="int" Nullable="false" />
+          <Property Name="event" Type="varchar" MaxLength="512" />
+        </EntityType>
+        <EntityContainer Name="Хранилище TorrentDBModelContainer">
+          <EntitySet Name="psy_trance_fm_bittorrent_announces" EntityType="Self.psy_trance_fm_bittorrent_announces" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [psy_trance_fm_bittorrent_announces].[id] AS [id], 
+    [psy_trance_fm_bittorrent_announces].[info_hash] AS [info_hash], 
+    [psy_trance_fm_bittorrent_announces].[peer_id] AS [peer_id], 
+    [psy_trance_fm_bittorrent_announces].[ip] AS [ip], 
+    [psy_trance_fm_bittorrent_announces].[port] AS [port], 
+    [psy_trance_fm_bittorrent_announces].[uploaded] AS [uploaded], 
+    [psy_trance_fm_bittorrent_announces].[downloaded] AS [downloaded], 
+    [psy_trance_fm_bittorrent_announces].[left] AS [left], 
+    [psy_trance_fm_bittorrent_announces].[event] AS [event]
+    FROM [dbo].[psy_trance_fm_bittorrent_announces] AS [psy_trance_fm_bittorrent_announces]</DefiningQuery>
+          </EntitySet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="TorrentDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="psy_trance_fm_bittorrent_announces">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="info_hash" />
+            <PropertyRef Name="peer_id" />
+            <PropertyRef Name="ip" />
+            <PropertyRef Name="port" />
+            <PropertyRef Name="uploaded" />
+            <PropertyRef Name="downloaded" />
+            <PropertyRef Name="left" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="info_hash" Type="String" MaxLength="40" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="peer_id" Type="String" MaxLength="40" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="ip" Type="String" MaxLength="512" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="port" Type="Int32" Nullable="false" />
+          <Property Name="uploaded" Type="Int32" Nullable="false" />
+          <Property Name="downloaded" Type="Int32" Nullable="false" />
+          <Property Name="left" Type="Int32" Nullable="false" />
+          <Property Name="event" Type="String" MaxLength="512" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityContainer Name="TorrentDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="psy_trance_fm_bittorrent_announces" EntityType="Self.psy_trance_fm_bittorrent_announces" />
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище TorrentDBModelContainer" CdmEntityContainer="TorrentDBEntities">
+          <EntitySetMapping Name="psy_trance_fm_bittorrent_announces">
+            <EntityTypeMapping TypeName="TorrentDBModel.psy_trance_fm_bittorrent_announces">
+              <MappingFragment StoreEntitySet="psy_trance_fm_bittorrent_announces">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="info_hash" ColumnName="info_hash" />
+                <ScalarProperty Name="peer_id" ColumnName="peer_id" />
+                <ScalarProperty Name="ip" ColumnName="ip" />
+                <ScalarProperty Name="port" ColumnName="port" />
+                <ScalarProperty Name="uploaded" ColumnName="uploaded" />
+                <ScalarProperty Name="downloaded" ColumnName="downloaded" />
+                <ScalarProperty Name="left" ColumnName="left" />
+                <ScalarProperty Name="event" ColumnName="event" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
