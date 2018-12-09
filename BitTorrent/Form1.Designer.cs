@@ -57,6 +57,7 @@
             this.Output = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Loaded = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.label1 = new System.Windows.Forms.Label();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).BeginInit();
@@ -245,6 +246,10 @@
             this.label1.TabIndex = 4;
             this.label1.Text = "label1";
             // 
+            // timer1
+            // 
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -253,7 +258,7 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.listView1);
             this.Controls.Add(this.groupBox2);
-            //this.Name = "Form1";
+           
             this.Text = "Form1";
             this.groupBox2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).EndInit();
@@ -289,6 +294,7 @@
         private System.Windows.Forms.ColumnHeader Output;
         private System.Windows.Forms.ColumnHeader Loaded;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Timer timer1;
     }
 }
 

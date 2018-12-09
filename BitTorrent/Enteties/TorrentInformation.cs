@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MonoTorrent.Common;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BitTorrent.Enteties
 {
- public   class TorrentInformation
+ public   class TorrentInformation:Torrent
     {
         public int _torrentId { get; set; }
         public string _createdBy { get; set; }

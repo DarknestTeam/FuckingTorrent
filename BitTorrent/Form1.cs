@@ -60,7 +60,7 @@ namespace BitTorrent
                     //слот отдачи, количество одновременных подключений, макс скорость загрузки, макс скорость отдачи
                     Task.Factory.StartNew(() => DoDownload());
 
-                    AddGroupBox(_torrent.Name, _torrent.Size, 23, _manager.Monitor.DownloadSpeed, 1, 1);//Error
+                   //Error
 
 
                 }
@@ -109,6 +109,7 @@ namespace BitTorrent
             try
             {
                 _torrent = Torrent.Load(_torrentPath); // если все ОК
+                
             }
             catch
             {
@@ -141,6 +142,7 @@ namespace BitTorrent
 
             _engine.Register(_manager);
 
+            _engine.StartAll();
 
             _manager.TorrentStateChanged += delegate (object o, TorrentStateChangedEventArgs e)
             {
@@ -150,6 +152,7 @@ namespace BitTorrent
 
             foreach (TrackerTier ttier in _manager.TrackerManager.TrackerTiers)
             {
+                AddMessage();
                 //foreach (MonoTorrent.Client.Tracker.Tracker tr in ttier.Trackers)
                 //{
                 //    tr.AnnounceComplete += delegate(object sender, AnnounceResponseEventArgs e)
@@ -164,15 +167,20 @@ namespace BitTorrent
             
             int i = 0;
             bool _running = true;
-
+          
+            timer1.Enabled = true;
             StringBuilder _stringBuilder = new StringBuilder(1024);
             while (_running)
             {
-
+                //AddGroupBox(_torrent.Name, _torrent.Size, 23, _manager.Monitor.DownloadSpeed, 1, 1);
+                AddMessage();
                 if ((i++) % 10 == 0)
                 {
                     if (_manager.State == TorrentState.Stopped)
                     {
+
+                        
+
                         _running = false;
                         exit();
                     }
@@ -206,11 +214,21 @@ namespace BitTorrent
                
             }
         }
+
+        public delegate void AddMessageDelegate(string Name, double Size, double Remaning, double Download_speed, double Output, double Loaded);
+
+        public void AddMessage()
+        {
+           Invoke(new AddMessageDelegate(AddGroupBox), new object[] { _torrent.Name, _torrent.Size, 23, _manager.Monitor.DownloadSpeed, 1, 1 });
+           
+        }
+
         public void AddGroupBox( string Name, double   Size, double Remaning,  double Download_speed,  double Output,  double Loaded)
         {
 
-            ListViewItem itm = new ListViewItem(new string[] {Name, Size.ToString(), Remaning.ToString(), Download_speed.ToString(), Output.ToString(), Loaded.ToString() });
-            listView1.Items.Add(itm);
+            //ListViewItem itm = new ListViewItem(new string[] {Name, Size.ToString(), Remaning.ToString(), Download_speed.ToString(), Output.ToString(), Loaded.ToString() });
+            //listView1.Items.Add(itm);
+            label1.Text = Download_speed.ToString();
         }
         private void pictureBox4_Click(object sender, EventArgs e)
         {
@@ -265,6 +283,13 @@ namespace BitTorrent
         private void listView1_SelectedIndexChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            Invoke(new AddMessageDelegate(AddGroupBox), new object[] { Name, Size.ToString(), Remaning.ToString(), Download_speed.ToString(), Output.ToString(), Loaded.ToString() });
+           
+            timer1.Enabled = false;
         }
     }
 }
