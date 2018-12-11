@@ -155,5 +155,8 @@
     </Content>
     <Content Include="Data\MonoTorrent.dll" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Images\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

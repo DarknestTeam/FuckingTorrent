@@ -30,20 +30,10 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem(new string[] {
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            ""}, -1);
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.pictureBox7 = new System.Windows.Forms.PictureBox();
             this.pictureBox6 = new System.Windows.Forms.PictureBox();
-            this.pictureBox5 = new System.Windows.Forms.PictureBox();
             this.pictureBox4 = new System.Windows.Forms.PictureBox();
-            this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -53,17 +43,17 @@
             this.Size = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Remaning = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.listView1 = new System.Windows.Forms.ListView();
+            this.Numb = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Download_speed = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Output = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Loaded = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.Numb = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.label1 = new System.Windows.Forms.Label();
+            this.timer2 = new System.Windows.Forms.Timer(this.components);
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.contextMenuStrip1.SuspendLayout();
@@ -73,9 +63,7 @@
             // 
             this.groupBox2.Controls.Add(this.pictureBox7);
             this.groupBox2.Controls.Add(this.pictureBox6);
-            this.groupBox2.Controls.Add(this.pictureBox5);
             this.groupBox2.Controls.Add(this.pictureBox4);
-            this.groupBox2.Controls.Add(this.pictureBox3);
             this.groupBox2.Controls.Add(this.pictureBox2);
             this.groupBox2.Controls.Add(this.pictureBox1);
             this.groupBox2.Location = new System.Drawing.Point(12, 2);
@@ -107,17 +95,6 @@
             this.pictureBox6.TabIndex = 5;
             this.pictureBox6.TabStop = false;
             // 
-            // pictureBox5
-            // 
-            this.pictureBox5.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pictureBox5.BackgroundImage")));
-            this.pictureBox5.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.pictureBox5.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pictureBox5.Location = new System.Drawing.Point(282, 14);
-            this.pictureBox5.Name = "pictureBox5";
-            this.pictureBox5.Size = new System.Drawing.Size(50, 35);
-            this.pictureBox5.TabIndex = 4;
-            this.pictureBox5.TabStop = false;
-            // 
             // pictureBox4
             // 
             this.pictureBox4.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pictureBox4.BackgroundImage")));
@@ -128,17 +105,6 @@
             this.pictureBox4.Size = new System.Drawing.Size(50, 35);
             this.pictureBox4.TabIndex = 3;
             this.pictureBox4.TabStop = false;
-            // 
-            // pictureBox3
-            // 
-            this.pictureBox3.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pictureBox3.BackgroundImage")));
-            this.pictureBox3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.pictureBox3.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pictureBox3.Location = new System.Drawing.Point(133, 14);
-            this.pictureBox3.Name = "pictureBox3";
-            this.pictureBox3.Size = new System.Drawing.Size(50, 35);
-            this.pictureBox3.TabIndex = 2;
-            this.pictureBox3.TabStop = false;
             // 
             // pictureBox2
             // 
@@ -188,7 +154,7 @@
             // 
             this.Name.Text = "Name";
             this.Name.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.Name.Width = 178;
+            this.Name.Width = 177;
             // 
             // Size
             // 
@@ -204,6 +170,7 @@
             // 
             // listView1
             // 
+            this.listView1.AllowColumnReorder = true;
             this.listView1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.Numb,
@@ -213,14 +180,18 @@
             this.Download_speed,
             this.Output,
             this.Loaded});
-            this.listView1.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem1});
+            this.listView1.FullRowSelect = true;
+            this.listView1.LabelWrap = false;
             this.listView1.Location = new System.Drawing.Point(12, 63);
             this.listView1.Name = "listView1";
             this.listView1.Size = new System.Drawing.Size(747, 151);
             this.listView1.TabIndex = 3;
             this.listView1.UseCompatibleStateImageBehavior = false;
             this.listView1.View = System.Windows.Forms.View.Details;
+            // 
+            // Numb
+            // 
+            this.Numb.Text = "#";
             // 
             // Download_speed
             // 
@@ -237,33 +208,34 @@
             this.Loaded.Text = "Loaded";
             this.Loaded.Width = 92;
             // 
-            // timer1
+            // label1
             // 
-            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
-            // 
-            // Numb
-            // 
-            this.Numb.Text = "#";
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(503, 221);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(35, 13);
+            this.label1.TabIndex = 4;
+            this.label1.Text = "label1";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(759, 450);
+            this.ClientSize = new System.Drawing.Size(770, 231);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.listView1);
             this.Controls.Add(this.groupBox2);
-            //this.Name = "Form1";
+           
             this.Text = "Form1";
             this.groupBox2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.contextMenuStrip1.ResumeLayout(false);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -275,9 +247,7 @@
         private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.PictureBox pictureBox7;
         private System.Windows.Forms.PictureBox pictureBox6;
-        private System.Windows.Forms.PictureBox pictureBox5;
         private System.Windows.Forms.PictureBox pictureBox4;
-        private System.Windows.Forms.PictureBox pictureBox3;
         protected System.Windows.Forms.ImageList imageList1;
         private System.Windows.Forms.ColumnHeader Name;
         private System.Windows.Forms.ColumnHeader Size;
@@ -288,6 +258,8 @@
         private System.Windows.Forms.ColumnHeader Loaded;
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.ColumnHeader Numb;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Timer timer2;
     }
 }
 
