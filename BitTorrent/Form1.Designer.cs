@@ -34,7 +34,6 @@
             this.pictureBox7 = new System.Windows.Forms.PictureBox();
             this.pictureBox6 = new System.Windows.Forms.PictureBox();
             this.pictureBox4 = new System.Windows.Forms.PictureBox();
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.radToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -54,7 +53,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -64,7 +62,6 @@
             this.groupBox2.Controls.Add(this.pictureBox7);
             this.groupBox2.Controls.Add(this.pictureBox6);
             this.groupBox2.Controls.Add(this.pictureBox4);
-            this.groupBox2.Controls.Add(this.pictureBox2);
             this.groupBox2.Controls.Add(this.pictureBox1);
             this.groupBox2.Location = new System.Drawing.Point(12, 2);
             this.groupBox2.Name = "groupBox2";
@@ -82,41 +79,31 @@
             this.pictureBox7.Size = new System.Drawing.Size(50, 35);
             this.pictureBox7.TabIndex = 6;
             this.pictureBox7.TabStop = false;
-          //  this.pictureBox7.Click += new System.EventHandler(this.//pictureBox7_Click);
+            this.pictureBox7.Click += new System.EventHandler(this.pictureBox7_Click);
             // 
             // pictureBox6
             // 
             this.pictureBox6.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pictureBox6.BackgroundImage")));
             this.pictureBox6.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.pictureBox6.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pictureBox6.Location = new System.Drawing.Point(351, 14);
+            this.pictureBox6.Location = new System.Drawing.Point(296, 14);
             this.pictureBox6.Name = "pictureBox6";
             this.pictureBox6.Size = new System.Drawing.Size(50, 35);
             this.pictureBox6.TabIndex = 5;
             this.pictureBox6.TabStop = false;
+            this.pictureBox6.Click += new System.EventHandler(this.pictureBox6_Click);
             // 
             // pictureBox4
             // 
             this.pictureBox4.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pictureBox4.BackgroundImage")));
             this.pictureBox4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.pictureBox4.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pictureBox4.Location = new System.Drawing.Point(208, 14);
+            this.pictureBox4.Location = new System.Drawing.Point(193, 14);
             this.pictureBox4.Name = "pictureBox4";
             this.pictureBox4.Size = new System.Drawing.Size(50, 35);
             this.pictureBox4.TabIndex = 3;
             this.pictureBox4.TabStop = false;
-            // 
-            // pictureBox2
-            // 
-            this.pictureBox2.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pictureBox2.BackgroundImage")));
-            this.pictureBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.pictureBox2.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pictureBox2.Location = new System.Drawing.Point(63, 14);
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(50, 35);
-            this.pictureBox2.TabIndex = 1;
-            this.pictureBox2.TabStop = false;
-            this.pictureBox2.Click += new System.EventHandler(this.pictureBox2_Click);
+            this.pictureBox4.Click += new System.EventHandler(this.pictureBox4_Click);
             // 
             // pictureBox1
             // 
@@ -170,6 +157,7 @@
             // 
             // listView1
             // 
+            this.listView1.Activation = System.Windows.Forms.ItemActivation.OneClick;
             this.listView1.AllowColumnReorder = true;
             this.listView1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
@@ -181,8 +169,9 @@
             this.Output,
             this.Loaded});
             this.listView1.FullRowSelect = true;
+            this.listView1.HoverSelection = true;
             this.listView1.LabelWrap = false;
-            this.listView1.Location = new System.Drawing.Point(12, 63);
+            this.listView1.Location = new System.Drawing.Point(2, 57);
             this.listView1.Name = "listView1";
             this.listView1.Size = new System.Drawing.Size(747, 151);
             this.listView1.TabIndex = 3;
@@ -225,13 +214,12 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.listView1);
             this.Controls.Add(this.groupBox2);
-           
+            //this.Name = "Form1";
             this.Text = "Form1";
             this.groupBox2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.contextMenuStrip1.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -244,7 +232,6 @@
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.ToolStripMenuItem radToolStripMenuItem;
         private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.PictureBox pictureBox7;
         private System.Windows.Forms.PictureBox pictureBox6;
         private System.Windows.Forms.PictureBox pictureBox4;

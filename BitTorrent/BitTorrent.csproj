@@ -78,6 +78,7 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Enteties\SocketListener.cs" />
+    <Compile Include="Enteties\SqlSDBConnection.cs" />
     <Compile Include="Enteties\Top10Listener.cs" />
     <Compile Include="Enteties\TorrentInformation.cs" />
     <Compile Include="Form1.cs">
