@@ -7,11 +7,9 @@ using MonoTorrent.Client.Tracker;
 using MonoTorrent.Common;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Net;
 using System.Reflection;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -41,24 +39,29 @@ namespace BitTorrent
            
 
         }
-       
+        int j = 0;
+        Task[] tasks = new Task[20];
+        
         private void pictureBox1_Click(object sender, EventArgs e)
         {
 
 
-
-            using (OpenFileDialog openFile = new OpenFileDialog())
+           using (OpenFileDialog openFile = new OpenFileDialog())
             {
                 openFile.FilterIndex = 1;
                 openFile.Filter = "Torrent files(*.torrent)|*.torrent| All files(*.*) | *.*";
-                if (openFile.ShowDialog() == DialogResult.OK)
+                if (openFile.ShowDialog() == DialogResult.OK  &&  j<20)
                 {
                     string sFileName = openFile.FileName;
                     _torrentPath = sFileName;
                     GetPath();
-                    Task.Factory.StartNew(() => DoDownload());
-                   
 
+                  //  Task.Factory.StartNew(() => DoDownload());
+                 
+
+                        tasks[j] = Task.Factory.StartNew(() =>DoDownload());
+                        label1.Text =  tasks[j].Id.ToString();
+                        j++;
 
 
                     _listener = new Top10Listener(10);
@@ -103,13 +106,15 @@ namespace BitTorrent
             }
            
         }
+     
+        
         private void DoDownload()
         {
 
             EngineSettings _engineSettings = new EngineSettings();
-            TorrentSettings _torrentDef = new TorrentSettings(5, 100, 0, 0); //слот отдачи, количество одновременных подключений, макс скорость загрузки, макс скорость отдачи
+            TorrentSettings _torrentDef = new TorrentSettings(); //слот отдачи, количество одновременных подключений, макс скорость загрузки, макс скорость отдачи
             _engineSettings.AllowedEncryption = ChooseEncryption();
-            _engineSettings.GlobalMaxUploadSpeed = 400 * 1024;
+            _engineSettings.GlobalMaxUploadSpeed = 800 * 1024;
             _engineSettings.SavePath = _dowlPath;
 
             _engine = new ClientEngine(_engineSettings);
@@ -175,35 +180,93 @@ namespace BitTorrent
             {
                 item.SubItems.Add(items);
             }
-            
-           
-           
-           
-            this.Invoke(new Action(() =>
-            {
-            
-                listView1.Items.Add(item);
-               
-            }));
-            
+
+           ///listView1.Invoke((Action<>) ( this.Invoke(=>UpdateListView(item) );
+
+             tasks[j] = Task.Factory.StartNew((() => listView1.Items.Add(item)));
+
+            //tasks[j] = new Task( () =>
+            //     {
+
+            //       listView1.Items.Add(item);
+
+            //   });
+            //this.Invoke(new Action(() =>
+            //     {
+
+            //         listView1.Items.Add(item);
+
+            //     }));
+
             while (_manager.State != TorrentState.Stopped || Convert.ToInt16(_manager.Progress) != 100)
             {
-                Invoke(new Action(() =>
-                {
-                    
-                    listView1.Items[index].SubItems[4].Text = (_manager.Monitor.DownloadSpeed/1024).ToString()+" KB/S";
-                    listView1.Items[index].SubItems[5].Text = (_manager.Monitor.UploadSpeed).ToString() + " KB/S";
-                    Type type = listView1.GetType();
-                    PropertyInfo propertyInfo = type.GetProperty("DoubleBuffered", BindingFlags.NonPublic | BindingFlags.Instance);
-                    propertyInfo.SetValue(listView1, true, null);
-                    
-                }));
-                
+                UpdateMessage();
+            //tasks[j] => };
+            //{ 
+            //    label1.Text = tasks[j].Id.ToString();
+            //    listView1.Items[index].SubItems[4].Text = (_manager.Monitor.DownloadSpeed / 1024).ToString() + " KB/S";
+            //    listView1.Items[index].SubItems[5].Text = (_manager.Monitor.UploadSpeed).ToString() + " KB/S";
+            //    Type type = listView1.GetType();
+            //    PropertyInfo propertyInfo = type.GetProperty("DoubleBuffered", BindingFlags.NonPublic | BindingFlags.Instance);
+            //    propertyInfo.SetValue(listView1, true, null);
+            //}
+            //  );
+           // Invoke(new Action(() =>
+            //{
+
+            //    label1.Text = tasks[j].Id.ToString();
+            //    listView1.Items[index].SubItems[4].Text = (_manager.Monitor.DownloadSpeed / 1024).ToString() + " KB/S";
+            //    listView1.Items[index].SubItems[5].Text = (_manager.Monitor.UploadSpeed).ToString() + " KB/S";
+            //    Type type = listView1.GetType();
+            //    PropertyInfo propertyInfo = type.GetProperty("DoubleBuffered", BindingFlags.NonPublic | BindingFlags.Instance);
+            //    propertyInfo.SetValue(listView1, true, null);
+
+            //}));
+
+            
             }
           
         }
 
-      
+        public delegate void UpdateMessageDelegate();
+
+        public void UpdateListView()
+        {
+            Invoke(new UpdateMessageDelegate(UpdateListView), new object[] { });
+
+        }
+        public void UpdateMessage()
+        {
+            Invoke(new UpdateMessageDelegate(UpdateGroupBox), new object[] { });
+
+        }
+        public void UpdateListView(ListViewItem item)
+        {
+            listView1.Items.Add(item);
+        }
+
+
+        static object locker = new object();
+        public void UpdateGroupBox()
+        {
+            Invoke(new Action(() =>
+            {
+                lock (locker)
+                {
+                    label1.Text = tasks[j].Id.ToString();
+                    listView1.Items[index].SubItems[4].Text = (_manager.Monitor.DownloadSpeed / 1024).ToString() + " KB/S";
+                    listView1.Items[index].SubItems[5].Text = (_manager.Monitor.UploadSpeed).ToString() + " KB/S";
+                    Type type = listView1.GetType();
+                    PropertyInfo propertyInfo = type.GetProperty("DoubleBuffered", BindingFlags.NonPublic | BindingFlags.Instance);
+                    propertyInfo.SetValue(listView1, true, null);
+                }
+
+            }));
+
+
+        }
+
+
         private void GerarTorrent()
         {
             MagnetLinkForm magnetLink = new MagnetLinkForm();
@@ -213,7 +276,8 @@ namespace BitTorrent
             string magnet = string.Format("magnet:?xt=urn:sha1:{0}", hash);
             MagnetLink ml = new MagnetLink(magnet);
             GetPath();
-            _manager = new TorrentManager(ml, _dowlPath, _torrentDef, "test.torrent");
+    
+           // _manager = new TorrentManager(ml, _dowlPath, _torrentDef, "test.torrent");
             hash = "";
             
 
